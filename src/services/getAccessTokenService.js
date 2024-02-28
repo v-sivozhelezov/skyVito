@@ -116,6 +116,14 @@ export const userAPI = createApi({
             }),
             invalidatesTags: ['User'],
         }),
+        editUserImg: build.mutation({
+            query: (body) => ({
+                method: 'POST',
+                url: '/user/avatar',
+                body,
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 });
 
@@ -145,4 +153,8 @@ export const adsAPI = createApi({
     }),
 });
 
-export const { useGetAuthUserQuery, useEditUserMutation } = userAPI;
+export const {
+    useGetAuthUserQuery,
+    useEditUserMutation,
+    useEditUserImgMutation,
+} = userAPI;
