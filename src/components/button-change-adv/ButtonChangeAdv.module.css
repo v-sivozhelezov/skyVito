@@ -1,0 +1,36 @@
+.articleBtn {
+    background-color: #009ee4;
+    border-radius: 6px;
+    border: 1px solid #009ee4;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.articleBtn:hover {
+    background-color: #0080c1;
+}
+
+.articleBtn span {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+}
+.articleBtnBlock {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.btnRedact {
+    width: 189px;
+    margin-right: 10px;
+}
+
+.btnRemove {
+    width: 225px;
+}
