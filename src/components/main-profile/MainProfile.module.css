@@ -1,0 +1,147 @@
+.mainProfile {
+    width: 100%;
+    padding: 0 0 70px;
+}
+.profileContent {
+    max-width: 834px;
+}
+.profileSettings {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: top;
+    -ms-flex-align: top;
+    align-items: top;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.settingsLeft {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-right: 43px;
+}
+.settingsImg {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+}
+.settingsImg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.settingsChangePhoto {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 24px;
+    border: none;
+    background: none;
+    color: #009ee4;
+}
+.settingsRight {
+    width: 630px;
+}
+
+.settingsDiv {
+    display: inline-block;
+    margin: 0 7px 20px;
+}
+
+.settingsForm {
+    width: 630px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.settingsForm input {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 13px 19px;
+}.settingsForm input:active {
+    border: 1px solid rgba(67, 199, 255, 0.2);
+}
+
+.settingsForm input::-webkit-input-placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.settingsForm input:-ms-input-placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.settingsForm input::-ms-input-placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.settingsForm input::placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.settingsForm label {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #c4c4c4;
+    margin-bottom: 4px;
+    display: block;
+}
+.settingsFName,
+.settingsLName,
+.settingsCity {
+    width: 300px;
+}
+
+.settingsPhone {
+    width: 614px;
+}
+.settingsBtn {
+    font-size: 16px;
+    line-height: 1;
+    color: #ffffff;
+    width: 154px;
+    height: 50px;
+    margin: 0px 7px 0;
+    background-color: #009ee4;
+    border-radius: 6px;
+    border: 1px solid #009ee4;
+}
+.settingsBtn:hover {
+    background-color: #0080c1;
+}

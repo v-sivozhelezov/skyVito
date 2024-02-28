@@ -1,0 +1,225 @@
+.mainMenu {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 11px 0;
+    padding: 43px 5px 77px;
+}
+
+.mainArtic {
+    display: flex;
+    max-width: 1178px;
+    margin: 0 auto;
+}
+
+.mainTitle {
+    margin-bottom: 32px;
+    padding: 0 5px;
+}
+
+.mainText {
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.mainContent {
+    max-width: 792px;
+    padding: 0 5px 117px;
+}
+
+.title {
+    font-size: 32px;
+    line-height: 46px;
+    font-weight: 500;
+    color: #000000;
+}
+.mainContainer {
+    max-width: 1178px;
+    margin: 0 auto;
+    padding: 0px 5px;
+}
+.articContent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: top;
+    -ms-flex-align: top;
+    align-items: top;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.articleLeft {
+    max-width: 480px;
+    margin-right: 54px;
+}
+
+.articleFillImg {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.articleImg {
+    width: 480px;
+    height: 480px;
+    background-color: #f0f0f0;
+    margin: 0 5px;
+}
+
+.articleImg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.articleImgBarMob {
+    display: none;
+}
+
+.articleImgBar {
+    margin-top: 30px;
+    width: 490px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: left;
+    -ms-flex-pack: left;
+    justify-content: left;
+    overflow: hidden;
+    margin-left: -5px;
+}
+
+.articleImgBarDiv {
+    width: 88px;
+    min-width: 88px;
+    height: 88px;
+    background-color: #f0f0f0;
+    border: 2px solid #f0f0f0;
+    margin: 0 5px;
+}
+
+.articleImgBarDiv img {
+    width: 100%;
+    height: auto;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.articleRight {
+    max-width: 621px;
+}
+
+.articleBlock {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.articleTitle {
+    margin-bottom: 10px;
+}
+
+.articleInfo {
+    margin-bottom: 34px;
+}
+
+.articleDate,
+.articleCity {
+    font-size: 16px;
+    line-height: 21px;
+    color: #5f5f5f;
+    margin-bottom: 4px;
+}
+
+.articleLink {
+    font-size: 16px;
+    line-height: 21px;
+    color: #009ee4;
+}
+
+.articlePrice {
+    font-size: 28px;
+    line-height: 39px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+
+.articleAuthor {
+    margin-top: 34px;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.authorImg {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+}
+
+.authorImg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.authorCont {
+    margin-left: 12px;
+}
+
+.authorName {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #009ee4;
+}
+
+.authorAbout {
+    font-size: 16px;
+    line-height: 32px;
+    color: #5f5f5f;
+}

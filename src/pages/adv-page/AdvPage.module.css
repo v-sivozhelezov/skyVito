@@ -1,0 +1,9 @@
+.main {
+    margin: 0 auto;
+}
+
+.mainContainer {
+    max-width: 1178px;
+    margin: 0 auto;
+    padding: 0px 5px;
+  }
