@@ -13,7 +13,6 @@ function AuthPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [postAccessToken] = getAccessTokenAPI.usePostAccessTokenMutation();
-    // const [getAuthUser] = userAPI.useGetAuthUserQuery();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -38,6 +37,7 @@ function AuthPage() {
                         user: JSON.parse(localStorage.getItem('userDataInfo')),
                     }),
                 );
+
                 localStorage.setItem('access', response?.data?.access_token);
                 localStorage.setItem('refresh', response?.data?.refresh_token);
                 navigate('/');

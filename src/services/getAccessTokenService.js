@@ -161,6 +161,13 @@ export const adsAPI = createApi({
             }),
             invalidatesTags: ['Ads'],
         }),
+        deleteAdv: build.mutation({
+            query: (id) => ({
+                url: `/ads/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Ads'],
+        }),
     }),
 });
 
@@ -170,4 +177,4 @@ export const {
     useEditUserImgMutation,
 } = userAPI;
 
-export const { useAddAdvTextMutation } = adsAPI;
+export const { useAddAdvTextMutation, useDeleteAdvMutation } = adsAPI;
