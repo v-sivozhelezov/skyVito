@@ -150,6 +150,17 @@ export const adsAPI = createApi({
             }),
             providesTags: ['Ads'],
         }),
+        addAdvText: build.mutation({
+            query: (body) => ({
+                url: `/adstext`,
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body,
+            }),
+            invalidatesTags: ['Ads'],
+        }),
     }),
 });
 
@@ -158,3 +169,5 @@ export const {
     useEditUserMutation,
     useEditUserImgMutation,
 } = userAPI;
+
+export const { useAddAdvTextMutation } = adsAPI;
