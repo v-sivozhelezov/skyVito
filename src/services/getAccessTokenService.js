@@ -177,4 +177,8 @@ export const {
     useEditUserImgMutation,
 } = userAPI;
 
-export const { useAddAdvTextMutation, useDeleteAdvMutation } = adsAPI;
+export const {
+    useAddAdvTextMutation,
+    useDeleteAdvMutation,
+    useGetReviewsForAdvQuery,
+} = adsAPI;

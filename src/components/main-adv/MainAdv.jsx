@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeadingH3 from '../heading-h3/HeadingH3';
 import s from './MainAdv.module.css';
 import ButtonShowNum from '../button-show-num/ButtonShowNum';
 import ButtonChangeAdv from '../button-change-adv/ButtonChangeAdv';
 import changeDate from '../../app/changeDate';
+import { useGetReviewsForAdvQuery } from '../../services/getAccessTokenService';
+import ProductReviews from '../../modals/product-reviews/ProductReviews';
 
 function MainAdv({ getChoseAdv }) {
     const compareIDUsers = () => {
@@ -11,9 +14,24 @@ function MainAdv({ getChoseAdv }) {
         return getChoseAdv?.user?.id === userInfoData.id;
     };
 
-    console.log(compareIDUsers());
+    const [isPopUpActive, setPopUpActive] = useState(false);
+
+    const handleClosePopUp = () => {
+        setPopUpActive(false);
+    };
+
+    const { data: reviews } = useGetReviewsForAdvQuery(getChoseAdv?.id);
+
     return (
         <div>
+            {isPopUpActive === 'reviews' ? (
+                <ProductReviews
+                    reviews={reviews}
+                    handlePopUp={handleClosePopUp}
+                />
+            ) : (
+                ''
+            )}
             <div className={s.mainArtic}>
                 <div className={s.mainContent}>
                     <div className={s.articleLeft}>
@@ -57,9 +75,13 @@ function MainAdv({ getChoseAdv }) {
                             <p className={s.articleCity}>
                                 {getChoseAdv?.user?.city}
                             </p>
-                            <Link className={s.articleLink} to="/reviews">
-                                23 отзыва
-                            </Link>
+                            <button
+                                type="button"
+                                className={s.articleLink}
+                                onClick={() => setPopUpActive('reviews')}
+                            >
+                                {`${reviews ? reviews.length : ''} отзывов`}
+                            </button>
                         </div>
                         <p className={s.articlePrice}>
                             {getChoseAdv?.price} рублей.
