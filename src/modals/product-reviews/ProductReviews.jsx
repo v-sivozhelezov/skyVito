@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useState } from 'react';
+
 import HeadingH3 from '../../components/heading-h3/HeadingH3';
 import Reviewer from '../../components/reviewer/Reviewer';
 import s from './ProductReviews.module.css';
 import changeDate from '../../app/changeDate';
+import { useAddReviewForAdvMutation } from '../../services/getAccessTokenService';
 
 function ProductReviews(props) {
-    const { reviews, handlePopUp } = props;
+    const { reviews, handlePopUp, id } = props;
+    const [comment, setComment] = useState('');
+
+    const [addComment] = useAddReviewForAdvMutation();
 
     return (
         // <div className={s.wrapper}>
@@ -32,24 +38,30 @@ function ProductReviews(props) {
                                 id="formArea"
                                 cols="auto"
                                 rows="5"
-                                placeholder="Введите описание"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                placeholder="Введите комментарий"
                             />
                         </div>
                         <button
                             type="button"
                             className={`${s.formNewArtBtnPub} ${s.btnHov02}`}
+                            onClick={() => {
+                                setComment('');
+                                addComment({ id, comment });
+                            }}
                         >
                             Опубликовать
                         </button>
                     </form>
                     <div className={s.modalReviews}>
-                        {reviews?.map((comment) => {
+                        {reviews?.map((review) => {
                             return (
                                 <Reviewer
-                                    key={comment.author.id}
-                                    reviewName={comment.author.name}
-                                    reviewText={comment.text}
-                                    reviewDate={changeDate(comment.created_on)}
+                                    key={review.author.id}
+                                    reviewName={review.author.name}
+                                    reviewText={review.text}
+                                    reviewDate={changeDate(review.created_on)}
                                     reviewTitle="Комментарий"
                                 />
                             );

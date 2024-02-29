@@ -150,6 +150,18 @@ export const adsAPI = createApi({
             }),
             providesTags: ['Ads'],
         }),
+        addReviewForAdv: build.mutation({
+            query: ({ id, comment }) => ({
+                url: `/ads/${id}/comments`,
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: { text: comment },
+            }),
+            invalidatesTags: ['Ads'],
+        }),
+
         addAdvText: build.mutation({
             query: (body) => ({
                 url: `/adstext`,
@@ -181,4 +193,5 @@ export const {
     useAddAdvTextMutation,
     useDeleteAdvMutation,
     useGetReviewsForAdvQuery,
+    useAddReviewForAdvMutation,
 } = adsAPI;

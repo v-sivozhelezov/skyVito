@@ -28,6 +28,7 @@ function MainAdv({ getChoseAdv }) {
                 <ProductReviews
                     reviews={reviews}
                     handlePopUp={handleClosePopUp}
+                    id={getChoseAdv?.id}
                 />
             ) : (
                 ''
