@@ -191,11 +191,13 @@ export const adsAPI = createApi({
             invalidatesTags: ['Ads'],
         }),
         uploadImageAdv: build.mutation({
-            query: (id, body) => ({
-                url: `/ads/${id}/image`,
-                method: 'POST',
-                body,
-            }),
+            query: ({ id, formData }) => {
+                return {
+                    method: 'POST',
+                    url: `/ads/${id}/image`,
+                    body: formData,
+                };
+            },
             invalidatesTags: ['Ads'],
         }),
     }),

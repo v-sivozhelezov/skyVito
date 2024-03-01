@@ -13,6 +13,7 @@ function MainProfile({ userData }) {
     const { surname, name, city, phone, role, email, avatar } = userData;
     const [editProfile] = useEditUserMutation();
     const [editProfileImg] = useEditUserImgMutation();
+
     const formData = new FormData();
 
     const [profile, setProfile] = useState({
@@ -37,7 +38,11 @@ function MainProfile({ userData }) {
 
     const submitProfile = () => {
         editProfile(profile);
-        if (image) editProfileImg(formData);
+
+        if (image) {
+            console.log(formData);
+            editProfileImg(formData);
+        }
     };
 
     const changePreLoadImage = (selectedImage) => {

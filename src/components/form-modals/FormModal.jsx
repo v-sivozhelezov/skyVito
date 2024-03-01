@@ -9,29 +9,31 @@ import {
 } from '../../services/getAccessTokenService';
 
 function FormModal(props) {
-    // const formData = new FormData();
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState(props.newArtInput);
     const [description, setDescription] = useState(props.newArtArea);
     const [price, setPrice] = useState(props.newArtPrice);
+    const [addAdvText] = useAddAdvTextMutation();
     const [uploadImageAdv] = useUploadImageAdvMutation();
     const [image, setImage] = useState('');
     const [imagePreLoad, setImagePreLoad] = useState('');
-
-    const navigate = useNavigate();
+    console.log(image);
+    console.log(imagePreLoad);
 
     // добавление объявления без фото(сделать проверки и направлять на страницу объявления)
-    const [addAdvText] = useAddAdvTextMutation();
+
     const submitAdv = () => {
+        // console.log(formData);
+
         addAdvText({ title, description, price }).then((res) => {
             const formData = new FormData();
             formData.append('file', image);
-
-            console.log(res?.data?.id, formData);
-            uploadImageAdv(res?.data?.id, formData);
+            uploadImageAdv({ id: res?.data?.id, formData });
         });
         navigate('/');
     };
-    console.log(imagePreLoad);
+
     const changePreLoadImage = (selectedImage) => {
         const reader = new FileReader();
         reader.readAsDataURL(selectedImage);
@@ -42,9 +44,6 @@ function FormModal(props) {
 
     const uploadAdvFoto = (event) => {
         event.preventDefault();
-        if (!event.target.files[0]) {
-            return;
-        }
         const selectedFile = event.target.files[0];
         setImage(selectedFile);
         changePreLoadImage(selectedFile);
@@ -84,7 +83,7 @@ function FormModal(props) {
                 </p>
                 <div className={s.formNewArtBarImg}>
                     <input
-                        id="input1"
+                        id="change"
                         className={s.settingsChangePhoto}
                         type="file"
                         accept=".jpg, .jpeg, .png"
