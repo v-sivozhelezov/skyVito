@@ -17,7 +17,10 @@ function MainSellerProfile() {
                     <div className={s.sellerLeft}>
                         <div className={s.sellerImg}>
                             <Link to="/">
-                                <img src="" alt="" />
+                                <img
+                                    src={`http://localhost:8090/${getChoseAdv?.user?.avatar}`}
+                                    alt="avatar"
+                                />
                             </Link>
                         </div>
                     </div>

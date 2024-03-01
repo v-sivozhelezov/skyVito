@@ -53,6 +53,10 @@
     position: relative;
 }
 
+.settingsChangePhoto {
+    display: none;
+}
+
 .modalTitle {
     font-size: 32px;
     line-height: 46px;
@@ -261,6 +265,7 @@
     left: 0;
     background-color: #f0f0f0;
     z-index: -1;
+    cursor: pointer;
 }
 
 .formNewArtImgCover::after,
@@ -291,7 +296,7 @@
 .formNewArtImg img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
     z-index: 2;

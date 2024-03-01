@@ -21,13 +21,12 @@ function FormModal(props) {
     console.log(image);
     console.log(imagePreLoad);
 
-    // добавление объявления без фото(сделать проверки и направлять на страницу объявления)
-
     const submitAdv = () => {
-        // console.log(formData);
-
         addAdvText({ title, description, price }).then((res) => {
             const formData = new FormData();
+            if (!image) {
+                return;
+            }
             formData.append('file', image);
             uploadImageAdv({ id: res?.data?.id, formData });
         });
@@ -82,25 +81,48 @@ function FormModal(props) {
                     <span>не более 5 фотографий</span>
                 </p>
                 <div className={s.formNewArtBarImg}>
-                    <input
-                        id="change"
-                        className={s.settingsChangePhoto}
-                        type="file"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={uploadAdvFoto}
-                    />
-                    {/* <label htmlFor="input1">Заменить</label> */}
                     <div className={s.formNewArtImg}>
-                        <img className={s.formNewArtImgCover} src="" alt="" />
-                        <div className={s.formNewArtImgCover} />
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            {imagePreLoad && (
+                                <img
+                                    src={imagePreLoad}
+                                    alt="img"
+                                    className={s.formNewArtImgCover}
+                                />
+                            )}
+                            <div className={s.formNewArtImgCover} />
+                        </label>
                     </div>
                     <div className={s.formNewArtImg}>
-                        <img className={s.formNewArtImgCover} src="" alt="" />
-                        <div className={s.formNewArtImgCover} />
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            <div className={s.formNewArtImgCover} />
+                        </label>
                     </div>
                     <div className={s.formNewArtImg}>
-                        <img className={s.formNewArtImgCover} src="" alt="" />
-                        <div className={s.formNewArtImgCover} />
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            <div className={s.formNewArtImgCover} />
+                        </label>
                     </div>
                     <div className={s.formNewArtImg}>
                         <img className={s.formNewArtImgCover} src="" alt="" />

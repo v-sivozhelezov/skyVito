@@ -7,8 +7,6 @@ import MainProfile from '../../components/main-profile/MainProfile';
 import { useGetAuthUserQuery } from '../../services/getAccessTokenService';
 
 function ProfilePage() {
-    // const userData = JSON.parse(localStorage.getItem('userDataInfo'));
-    // console.log(userData);
     const { data, isLoading } = useGetAuthUserQuery();
     if (isLoading) {
         return 'Loading';

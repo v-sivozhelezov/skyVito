@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { useDeleteAdvMutation } from '../../services/getAccessTokenService';
 import s from './ButtonChangeAdv.module.css';
 
 function ButtonChangeAdv(props) {
     const [deleteAdv] = useDeleteAdvMutation();
+    const navigate = useNavigate();
 
     return (
         <div className={s.articleBtnBlock}>
@@ -12,7 +14,10 @@ function ButtonChangeAdv(props) {
             <button
                 type="button"
                 className={`${s.articleBtn} ${s.btnRemove}`}
-                onClick={() => deleteAdv(props.id)}
+                onClick={() => {
+                    navigate('/');
+                    deleteAdv(props.id);
+                }}
             >
                 Снять с публикации
             </button>

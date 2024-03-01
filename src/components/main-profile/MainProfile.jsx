@@ -69,11 +69,11 @@ function MainProfile({ userData }) {
                         <div className={s.settingsImg}>
                             <Link to="/profile">
                                 {imagePreLoad ? (
-                                    <img src={imagePreLoad} alt="" />
+                                    <img src={imagePreLoad} alt="avatar" />
                                 ) : (
                                     <img
                                         src={`http://localhost:8090/${avatar ?? ''}`}
-                                        alt=""
+                                        alt="avatar"
                                     />
                                 )}
                             </Link>
