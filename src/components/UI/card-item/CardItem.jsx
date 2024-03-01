@@ -13,7 +13,10 @@ function CardItem({ ad }) {
             <div className={s.cardsCard}>
                 <div className={s.cardImage}>
                     <Link to="/" className="">
-                        <img src={images?.url} alt="" />
+                        <img
+                            src={`http://localhost:8090/${images[0]?.url}`}
+                            alt=""
+                        />
                     </Link>
                 </div>
                 <div className={s.cardContent}>

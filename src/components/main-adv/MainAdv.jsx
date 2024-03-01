@@ -15,12 +15,32 @@ function MainAdv({ getChoseAdv }) {
     };
 
     const [isPopUpActive, setPopUpActive] = useState(false);
+    const formData = new FormData();
 
     const handleClosePopUp = () => {
         setPopUpActive(false);
     };
 
     const { data: reviews } = useGetReviewsForAdvQuery(getChoseAdv?.id);
+
+    const [image, setImage] = useState('');
+    const [imagePreLoad, setImagePreLoad] = useState('');
+    console.log(imagePreLoad);
+    const changePreLoadImage = (selectedImage) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedImage);
+        reader.onloadend = () => {
+            setImagePreLoad(reader.result);
+        };
+    };
+
+    const uploadAdvFoto = (event) => {
+        event.preventDefault();
+        formData.append('file', image);
+        const selectedFile = event.target.files[0];
+        setImage(selectedFile);
+        changePreLoadImage(selectedFile);
+    };
 
     return (
         <div>
@@ -40,6 +60,14 @@ function MainAdv({ getChoseAdv }) {
                             <div className={s.articleImg}>
                                 <img src="" alt="" />
                             </div>
+                            <input
+                                id="input1"
+                                className={s.settingsChangePhoto}
+                                type="file"
+                                accept=".jpg, .jpeg, .png"
+                                onChange={uploadAdvFoto}
+                            />
+                            {/* <label htmlFor="input1">Заменить</label> */}
                             <div className={s.articleImgBar}>
                                 <div className={s.articleImgBarDiv}>
                                     <img src="" alt="" />
