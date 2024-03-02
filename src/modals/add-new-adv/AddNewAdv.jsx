@@ -3,7 +3,9 @@ import FormModal from '../../components/form-modals/FormModal';
 import HeadingH3 from '../../components/heading-h3/HeadingH3';
 import s from './AddNewAdv.module.css';
 
-function AddNewAdv() {
+function AddNewAdv(props) {
+    const { handlePopUp } = props;
+
     return (
         <div className={s.wrapper}>
             <div className={s.containerBg}>
@@ -11,7 +13,10 @@ function AddNewAdv() {
                     <div className={s.modalContent}>
                         <HeadingH3>Новое объявление</HeadingH3>
                         <div className={s.modalBtnClose}>
-                            <div className={s.modalBtnCloseLine} />
+                            <button type="button" onClick={handlePopUp}>
+                                {' '}
+                                <div className={s.modalBtnCloseLine} />
+                            </button>
                         </div>
                         <FormModal />
                     </div>

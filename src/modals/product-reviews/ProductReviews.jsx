@@ -14,8 +14,6 @@ function ProductReviews(props) {
     const [addComment] = useAddReviewForAdvMutation();
 
     return (
-        // <div className={s.wrapper}>
-        // <div className={s.containerBg}>
         <div className={s.modalBlock}>
             <div className={s.modalContent}>
                 <HeadingH3>Отзывы о товаре</HeadingH3>
@@ -70,8 +68,6 @@ function ProductReviews(props) {
                 </div>
             </div>
         </div>
-        // </div>
-        // </div>
     );
 }
 

@@ -22,29 +22,27 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         return result;
     }
 
-    // const forceLogout = () => {
-    //     console.debug('Принудительная авторизация!');
-    //     api.dispatch(setAuth(null));
-    //     window.location.assign('/auth');
-    // };
+    const forceLogout = () => {
+        console.debug('Принудительная авторизация!');
+        // api.dispatch(setAuth(null));
+        // localStorage.setItem('access_token', null);
+        window.location.assign('/profile');
+    };
 
     const { auth } = api.getState();
     console.debug('Данные пользователя в сторе', { auth });
-    // if (!auth.refresh) {
-    //     return forceLogout();
-    // }
+    if (!auth.refresh) {
+        return forceLogout();
+    }
 
     const refreshResult = await baseQuery(
         {
-            url: '/auth/login',
+            url: '/auth/login/',
             method: 'PUT',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                refresh_token: auth.refresh,
+            body: {
                 access_token: auth.access,
-            }),
+                refresh_token: auth.refresh,
+            },
         },
         api,
         extraOptions,
@@ -52,23 +50,23 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     console.debug('Результат запроса на обновление токена', { refreshResult });
 
-    // if (!refreshResult?.data?.access) {
-    //     return forceLogout();
-    // }
+    if (!refreshResult.data?.access_token) {
+        return forceLogout();
+    }
 
     api.dispatch(
         setAuth({
             ...auth,
-            access: refreshResult.data.access,
-            refresh: refreshResult.data.refresh,
+            access: refreshResult.data?.access_token,
+            refresh: refreshResult.data?.refresh_token,
         }),
     );
 
     const retryResult = await baseQuery(args, api, extraOptions);
 
-    // if (retryResult?.error?.status === 401) {
-    //     return forceLogout();
-    // }
+    if (retryResult?.error?.status === 401) {
+        return forceLogout();
+    }
 
     console.debug('Повторный запрос завершился успешно');
 
