@@ -8,12 +8,12 @@ import {
     useUploadImageAdvMutation,
 } from '../../services/getAccessTokenService';
 
-function FormModal(props) {
+function FormModalAdd() {
     const navigate = useNavigate();
 
-    const [title, setTitle] = useState(props.newArtInput);
-    const [description, setDescription] = useState(props.newArtArea);
-    const [price, setPrice] = useState(props.newArtPrice);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
     const [addAdvText] = useAddAdvTextMutation();
     const [uploadImageAdv] = useUploadImageAdvMutation();
     const [image, setImage] = useState('');
@@ -151,4 +151,4 @@ function FormModal(props) {
     );
 }
 
-export default FormModal;
+export default FormModalAdd;

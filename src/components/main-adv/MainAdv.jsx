@@ -7,6 +7,7 @@ import ButtonChangeAdv from '../button-change-adv/ButtonChangeAdv';
 import changeDate from '../../app/changeDate';
 import { useGetReviewsForAdvQuery } from '../../services/getAccessTokenService';
 import ProductReviews from '../../modals/product-reviews/ProductReviews';
+import AddNewAdv from '../../modals/add-new-adv/AddNewAdv';
 
 function MainAdv({ getChoseAdv }) {
     const compareIDUsers = () => {
@@ -16,8 +17,8 @@ function MainAdv({ getChoseAdv }) {
 
     const [isPopUpActive, setPopUpActive] = useState(false);
 
-    const handleClosePopUp = () => {
-        setPopUpActive(false);
+    const handlePopUp = (e) => {
+        setPopUpActive(e);
     };
 
     const { data: reviews } = useGetReviewsForAdvQuery(getChoseAdv?.id);
@@ -27,8 +28,17 @@ function MainAdv({ getChoseAdv }) {
             {isPopUpActive === 'reviews' ? (
                 <ProductReviews
                     reviews={reviews}
-                    handlePopUp={handleClosePopUp}
+                    handlePopUp={handlePopUp}
                     id={getChoseAdv?.id}
+                />
+            ) : (
+                ''
+            )}
+            {isPopUpActive === 'editAdv' ? (
+                <AddNewAdv
+                    heading="Изменить объявление"
+                    handlePopUp={handlePopUp}
+                    getChoseAdv={getChoseAdv}
                 />
             ) : (
                 ''
@@ -83,7 +93,10 @@ function MainAdv({ getChoseAdv }) {
                             {getChoseAdv?.price} рублей.
                         </p>
                         {compareIDUsers() ? (
-                            <ButtonChangeAdv id={getChoseAdv.id} />
+                            <ButtonChangeAdv
+                                handlePopUp={handlePopUp}
+                                id={getChoseAdv.id}
+                            />
                         ) : (
                             <ButtonShowNum
                                 phoneNumber={getChoseAdv?.user?.phone}

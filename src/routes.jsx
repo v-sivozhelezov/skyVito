@@ -24,7 +24,10 @@ function AppRoutes() {
                     <Route path="/my-adv-page" element={<MyAdvPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/reviews" element={<ProductReviews />} />
-                    <Route path="/add-new-adv" element={<AddNewAdv />} />
+                    <Route
+                        path="/add-new-adv"
+                        element={<AddNewAdv heading="Новое объявление" />}
+                    />
                 </Route>
             </Route>
         </Routes>

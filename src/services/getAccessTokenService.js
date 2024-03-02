@@ -205,6 +205,14 @@ export const adsAPI = createApi({
             },
             invalidatesTags: ['Ads'],
         }),
+        editAdv: build.mutation({
+            query: ({ id, data }) => ({
+                url: `/ads/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['Ads'],
+        }),
     }),
 });
 
@@ -221,4 +229,5 @@ export const {
     useGetReviewsForAdvQuery,
     useAddReviewForAdvMutation,
     useUploadImageAdvMutation,
+    useEditAdvMutation,
 } = adsAPI;

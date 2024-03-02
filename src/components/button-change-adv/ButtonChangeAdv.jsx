@@ -8,7 +8,11 @@ function ButtonChangeAdv(props) {
 
     return (
         <div className={s.articleBtnBlock}>
-            <button type="button" className={`${s.articleBtn} ${s.btnRedact}`}>
+            <button
+                onClick={() => props.handlePopUp('editAdv')}
+                type="button"
+                className={`${s.articleBtn} ${s.btnRedact}`}
+            >
                 Редактировать
             </button>
             <button
