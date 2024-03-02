@@ -17,6 +17,10 @@ function MainAdv({ getChoseAdv }) {
 
     const [isPopUpActive, setPopUpActive] = useState(false);
 
+    const [defaultUrlImg, setDefaultUrlImg] = useState(
+        getChoseAdv?.images[0]?.url,
+    );
+
     const handlePopUp = (e) => {
         setPopUpActive(e);
     };
@@ -49,22 +53,29 @@ function MainAdv({ getChoseAdv }) {
                         <div className={s.articleFillImg}>
                             <div className={s.articleImg}>
                                 <img
-                                    src={`http://localhost:8090/${getChoseAdv?.images[0]?.url}`}
+                                    src={`http://localhost:8090/${defaultUrlImg ?? getChoseAdv?.images[0].url}`}
                                     alt="img"
                                 />
                             </div>
                             <div className={s.articleImgBar}>
                                 {getChoseAdv?.images?.map((img) => {
                                     return (
-                                        <div
-                                            key={img.id}
-                                            className={s.articleImgBarDiv}
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setDefaultUrlImg(img.url)
+                                            }
                                         >
-                                            <img
-                                                src={`http://localhost:8090/${img.url}`}
-                                                alt="img"
-                                            />
-                                        </div>
+                                            <div
+                                                key={img.id}
+                                                className={s.articleImgBarDiv}
+                                            >
+                                                <img
+                                                    src={`http://localhost:8090/${img.url}`}
+                                                    alt="img"
+                                                />
+                                            </div>
+                                        </button>
                                     );
                                 })}
                             </div>

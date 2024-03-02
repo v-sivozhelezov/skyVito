@@ -16,37 +16,39 @@ function FormModal(props) {
     const [editAdv] = useEditAdvMutation();
     const [uploadImageAdv] = useUploadImageAdvMutation();
     const [image, setImage] = useState('');
-    const [imagePreLoad, setImagePreLoad] = useState(adv?.image);
+    const [imagePreLoad, setImagePreLoad] = useState(adv?.images);
     console.log(image);
     console.log(imagePreLoad);
 
     const submitAdv = () => {
         editAdv({ id: adv.id, data: { title, description, price } }).then(
             () => {
-                const formData = new FormData();
                 if (!image) {
                     return;
                 }
-                formData.append('file', image);
-                uploadImageAdv({ id: adv.id, formData });
+                // eslint-disable-next-line no-plusplus
+                for (let i = 0; i < imagePreLoad.length; i++) {
+                    const formData = new FormData();
+                    formData.append('file', image);
+                    uploadImageAdv({ id: adv.id, formData });
+                }
             },
         );
         props.handlePopUp(false);
-        // navigate('/');
     };
 
     const changePreLoadImage = (selectedImage) => {
         const reader = new FileReader();
         reader.readAsDataURL(selectedImage);
         reader.onloadend = () => {
-            setImagePreLoad(reader.result);
+            setImagePreLoad(() => [...imagePreLoad, reader.result]);
         };
     };
 
     const uploadAdvFoto = (event) => {
         event.preventDefault();
         const selectedFile = event.target.files[0];
-        setImage(selectedFile);
+        setImage(() => [...image, selectedFile]);
         changePreLoadImage(selectedFile);
     };
 
@@ -92,9 +94,9 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
-                            {imagePreLoad && (
+                            {imagePreLoad[0].url && (
                                 <img
-                                    src={imagePreLoad}
+                                    src={`http://localhost:8090/${imagePreLoad[0]?.url}`}
                                     alt="img"
                                     className={s.formNewArtImgCover}
                                 />
@@ -111,6 +113,13 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
+                            {imagePreLoad[1]?.url && (
+                                <img
+                                    src={`http://localhost:8090/${imagePreLoad[1]?.url}`}
+                                    alt="img"
+                                    className={s.formNewArtImgCover}
+                                />
+                            )}
                             <div className={s.formNewArtImgCover} />
                         </label>
                     </div>
@@ -123,12 +132,53 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
+                            {imagePreLoad[2]?.url && (
+                                <img
+                                    src={`http://localhost:8090/${imagePreLoad[2]?.url}`}
+                                    alt="img"
+                                    className={s.formNewArtImgCover}
+                                />
+                            )}
                             <div className={s.formNewArtImgCover} />
                         </label>
                     </div>
                     <div className={s.formNewArtImg}>
-                        <img className={s.formNewArtImgCover} src="" alt="" />
-                        <div className={s.formNewArtImgCover} />
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            {imagePreLoad[3]?.url && (
+                                <img
+                                    src={`http://localhost:8090/${imagePreLoad[3]?.url}`}
+                                    alt="img"
+                                    className={s.formNewArtImgCover}
+                                />
+                            )}
+                            <div className={s.formNewArtImgCover} />
+                        </label>
+                    </div>
+                    <div className={s.formNewArtImg}>
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            {imagePreLoad[4]?.url && (
+                                <img
+                                    src={`http://localhost:8090/${imagePreLoad[4]?.url}`}
+                                    alt="img"
+                                    className={s.formNewArtImgCover}
+                                />
+                            )}
+                            <div className={s.formNewArtImgCover} />
+                        </label>
                     </div>
                 </div>
             </div>
