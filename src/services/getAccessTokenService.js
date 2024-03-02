@@ -22,17 +22,17 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         return result;
     }
 
-    const forceLogout = () => {
-        console.debug('Принудительная авторизация!');
-        api.dispatch(setAuth(null));
-        window.location.assign('/auth');
-    };
+    // const forceLogout = () => {
+    //     console.debug('Принудительная авторизация!');
+    //     api.dispatch(setAuth(null));
+    //     window.location.assign('/auth');
+    // };
 
     const { auth } = api.getState();
     console.debug('Данные пользователя в сторе', { auth });
-    if (!auth.refresh) {
-        return forceLogout();
-    }
+    // if (!auth.refresh) {
+    //     return forceLogout();
+    // }
 
     const refreshResult = await baseQuery(
         {
@@ -52,9 +52,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     console.debug('Результат запроса на обновление токена', { refreshResult });
 
-    if (!refreshResult?.data?.access) {
-        return forceLogout();
-    }
+    // if (!refreshResult?.data?.access) {
+    //     return forceLogout();
+    // }
 
     api.dispatch(
         setAuth({
@@ -66,9 +66,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     const retryResult = await baseQuery(args, api, extraOptions);
 
-    if (retryResult?.error?.status === 401) {
-        return forceLogout();
-    }
+    // if (retryResult?.error?.status === 401) {
+    //     return forceLogout();
+    // }
 
     console.debug('Повторный запрос завершился успешно');
 
@@ -112,7 +112,14 @@ export const userAPI = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['User'],
     endpoints: (build) => ({
-        getAuthUser: build.query({
+        getCurrentUser: build.query({
+            query: () => ({
+                url: '/user',
+            }),
+            providesTags: ['User'],
+        }),
+
+        getAuthUser: build.mutation({
             query: () => ({
                 url: '/user',
             }),
@@ -204,7 +211,8 @@ export const adsAPI = createApi({
 });
 
 export const {
-    useGetAuthUserQuery,
+    useGetCurrentUserQuery,
+    useGetAuthUserMutation,
     useEditUserMutation,
     useEditUserImgMutation,
 } = userAPI;

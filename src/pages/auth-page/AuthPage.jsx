@@ -3,28 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import s from './AuthPage.module.css';
+
 import {
     getAccessTokenAPI,
-    // userAPI,
+    useGetAuthUserMutation,
 } from '../../services/getAccessTokenService';
-import { setAuth } from '../../redux/slices/authSlice';
+import { setAuth, setAuthUser } from '../../redux/slices/authSlice';
 
 function AuthPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [postAccessToken] = getAccessTokenAPI.usePostAccessTokenMutation();
+    const [getAuthUser] = useGetAuthUserMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // const fetchAuthUser = () => {
-    //     getAuthUser().then((responseUser) => {
-    //         localStorage.setItem(
-    //             'userDataInfo',
-    //             JSON.stringify(responseUser?.data),
-    //         );
-    //         navigate('/profile');
-    //     });
-    // };
 
     const responseToken = () => {
         postAccessToken({ email, password })
@@ -41,6 +33,16 @@ function AuthPage() {
                 localStorage.setItem('access', response?.data?.access_token);
                 localStorage.setItem('refresh', response?.data?.refresh_token);
                 navigate('/');
+            })
+            .then(() => {
+                getAuthUser().then((response) => {
+                    localStorage.setItem(
+                        'userInfoData',
+                        JSON.stringify(response.data),
+                    );
+                    dispatch(setAuthUser(response.data));
+                    console.log(response);
+                });
             })
             .catch(() => {
                 localStorage.setItem('userDataInfo', null);

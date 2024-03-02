@@ -25,7 +25,7 @@ function RegistrationPage() {
                     setAuth({
                         access: response.data.access_token,
                         refresh: response.data.refresh_token,
-                        user: JSON.parse(localStorage.getItem('userDataInfo')),
+                        // user: JSON.parse(localStorage.getItem('userDataInfo')),
                     }),
                 );
                 localStorage.setItem('access', response?.data?.access_token);
