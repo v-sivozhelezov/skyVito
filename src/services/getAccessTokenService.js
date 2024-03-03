@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setAuth } from '../redux/slices/authSlice';
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
+    console.log(args);
     const baseQuery = fetchBaseQuery({
         baseUrl: 'http://localhost:8090/',
 
@@ -18,7 +19,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     const result = await baseQuery(args, api, extraOptions);
     console.debug('Результат первого запроса', { result });
 
-    if (result?.error?.status !== 401) {
+    if (args.url === '/auth/register') {
+        return result;
+    }
+
+    if (
+        result?.error?.status !== 401 ||
+        result?.error?.data?.detail === 'Incorrect password'
+    ) {
         return result;
     }
 
@@ -84,6 +92,23 @@ export const getAccessTokenAPI = createApi({
                 body: JSON.stringify({
                     email,
                     password,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                },
+            }),
+        }),
+        fetchPostRegister: build.mutation({
+            query: ({ email, password, city, firstName, lastName, phone }) => ({
+                method: 'POST',
+                url: '/auth/register',
+                body: JSON.stringify({
+                    email,
+                    password,
+                    city,
+                    name: firstName,
+                    surname: lastName,
+                    phone,
                 }),
                 headers: {
                     'content-type': 'application/json',

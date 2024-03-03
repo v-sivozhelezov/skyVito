@@ -10,6 +10,10 @@
     position: relative;
     background-color: #f4f5f6;
 }
+
+.error {
+    color: red;
+}
 .modalBtnEnter {
     width: 278px;
     height: 52px;

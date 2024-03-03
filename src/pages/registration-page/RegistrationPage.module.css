@@ -10,6 +10,11 @@
     position: relative;
     background-color: #f4f5f6;
 }
+
+.error {
+    color: red;
+}
+
 .modalFormRegister {
     width: 366px;
     max-height: 700px;

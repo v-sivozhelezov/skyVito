@@ -49,7 +49,7 @@ const authSlice = createSlice({
             localStorage.setItem(AUTH_INFO, JSON.stringify(state));
         },
         deleteAuthUser(state) {
-            state.auth = initialState;
+            state.auth = '';
         },
     },
 });

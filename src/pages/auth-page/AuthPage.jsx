@@ -12,16 +12,25 @@ import { setAuth, setAuthUser } from '../../redux/slices/authSlice';
 
 function AuthPage() {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState(false);
+    const [error, setError] = useState('');
     const [postAccessToken] = getAccessTokenAPI.usePostAccessTokenMutation();
     const [getAuthUser] = useGetAuthUserMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const responseToken = () => {
+        if (!email) {
+            setError('Не заполнен email');
+            return;
+        }
+        if (!password) {
+            setError('Не заполнен пароль');
+            return;
+        }
         postAccessToken({ email, password })
             .then((response) => {
-                console.log(response);
+                console.log(error);
                 dispatch(
                     setAuth({
                         access: response.data.access_token,
@@ -29,10 +38,8 @@ function AuthPage() {
                         user: JSON.parse(localStorage.getItem('userDataInfo')),
                     }),
                 );
-
                 localStorage.setItem('access', response?.data?.access_token);
                 localStorage.setItem('refresh', response?.data?.refresh_token);
-                navigate('/');
             })
             .then(() => {
                 getAuthUser().then((response) => {
@@ -42,10 +49,13 @@ function AuthPage() {
                     );
                     dispatch(setAuthUser(response.data));
                     console.log(response);
+                    setError('');
+                    navigate('/');
                 });
             })
             .catch(() => {
-                localStorage.setItem('userDataInfo', null);
+                // localStorage.setItem('userDataInfo', null);
+                setError('Проверьте правильность ввода логина и пароля');
             });
     };
 
@@ -56,7 +66,10 @@ function AuthPage() {
                     <form
                         className="modal__form-login"
                         action=""
-                        onSubmit={(event) => event.preventDefault()}
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            setError('');
+                        }}
                     >
                         <div>
                             <Link to="/">
@@ -72,7 +85,10 @@ function AuthPage() {
                             type="text"
                             name="login"
                             value={email}
-                            onChange={(event) => setEmail(event.target.value)}
+                            onChange={(event) => {
+                                setEmail(event.target.value);
+                                setError('');
+                            }}
                             placeholder="Введите email"
                         />
                         <input
@@ -80,11 +96,14 @@ function AuthPage() {
                             type="password"
                             name="password"
                             value={password}
-                            onChange={(event) =>
-                                setPassword(event.target.value)
-                            }
+                            onChange={(event) => {
+                                setPassword(event.target.value);
+                                setError('');
+                            }}
                             placeholder="Введите пароль"
                         />
+                        {error ? <span className={s.error}>{error}</span> : ''}
+
                         <button
                             className={`${s.modalBtnEnter}`}
                             type="button"
