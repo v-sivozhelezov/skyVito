@@ -156,6 +156,13 @@ export const userAPI = createApi({
             }),
             invalidatesTags: ['User'],
         }),
+        editPasswordUser: build.mutation({
+            query: (body) => ({
+                method: 'PUT',
+                url: '/user/password',
+                body,
+            }),
+        }),
         editUserImg: build.mutation({
             query: (body) => ({
                 method: 'POST',
@@ -245,6 +252,7 @@ export const {
     useGetCurrentUserQuery,
     useGetAuthUserMutation,
     useEditUserMutation,
+    useEditPasswordUserMutation,
     useEditUserImgMutation,
 } = userAPI;
 

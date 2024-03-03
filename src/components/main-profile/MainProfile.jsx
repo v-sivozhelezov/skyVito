@@ -8,6 +8,7 @@ import {
     useEditUserMutation,
     useEditUserImgMutation,
 } from '../../services/getAccessTokenService';
+import EditPasswordForm from '../EditPasswordForm/EditPasswordForm';
 
 function MainProfile({ userData }) {
     const { surname, name, city, phone, role, email, avatar } = userData;
@@ -60,8 +61,13 @@ function MainProfile({ userData }) {
         changePreLoadImage(selectedFile);
     };
 
+    const [isPopUpChangePassword, SetIsPopUpChangePassword] = useState(false);
+
     return (
         <div className={s.mainProfile}>
+            {isPopUpChangePassword && (
+                <EditPasswordForm handlePopUp={SetIsPopUpChangePassword} />
+            )}
             <div className={s.profileContent}>
                 <HeadingH3>Настройки профиля</HeadingH3>
                 <div className={s.profileSettings}>
@@ -137,6 +143,13 @@ function MainProfile({ userData }) {
                                 onClick={submitProfile}
                             >
                                 Сохранить
+                            </button>
+                            <button
+                                className={s.settingsBtn}
+                                type="button"
+                                onClick={() => SetIsPopUpChangePassword(true)}
+                            >
+                                Сменить пароль
                             </button>
                         </form>
                     </div>
