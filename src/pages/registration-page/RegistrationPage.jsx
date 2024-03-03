@@ -1,5 +1,5 @@
 import '../../App.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import s from './RegistrationPage.module.css';
@@ -17,10 +17,11 @@ function RegistrationPage() {
     const [phone, setPhone] = useState('');
     const [postAccessToken] = getAccessTokenAPI.usePostAccessTokenMutation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const responseToken = () => {
         postAccessToken({ email, password })
             .then((response) => {
-                console.log(response);
+                navigate('/');
                 dispatch(
                     setAuth({
                         access: response.data.access_token,
@@ -72,7 +73,7 @@ function RegistrationPage() {
                         </div>
                         <input
                             className={`${s.wrap} modal__input login`}
-                            type="text"
+                            type="email"
                             name="login"
                             placeholder="Введите email"
                             value={email}

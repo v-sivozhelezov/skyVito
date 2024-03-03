@@ -25,7 +25,13 @@ function MainAdv({ getChoseAdv }) {
         setPopUpActive(e);
     };
 
-    const { data: reviews } = useGetReviewsForAdvQuery(getChoseAdv?.id);
+    const { data: reviews, isLoading } = useGetReviewsForAdvQuery(
+        getChoseAdv?.id,
+    );
+
+    if (isLoading) {
+        return 'Идет загрузка...';
+    }
 
     return (
         <div>
@@ -53,7 +59,7 @@ function MainAdv({ getChoseAdv }) {
                         <div className={s.articleFillImg}>
                             <div className={s.articleImg}>
                                 <img
-                                    src={`http://localhost:8090/${defaultUrlImg ?? getChoseAdv?.images[0].url}`}
+                                    src={`http://localhost:8090/${defaultUrlImg ?? getChoseAdv?.images[0]?.url}`}
                                     alt="img"
                                 />
                             </div>
@@ -112,7 +118,7 @@ function MainAdv({ getChoseAdv }) {
                         {compareIDUsers() ? (
                             <ButtonChangeAdv
                                 handlePopUp={handlePopUp}
-                                id={getChoseAdv.id}
+                                id={getChoseAdv?.id}
                             />
                         ) : (
                             <ButtonShowNum

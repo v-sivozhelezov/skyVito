@@ -12,10 +12,13 @@ const filterSlice = createSlice({
         setFilteredAds: (state, action) => {
             state.filteredAds = action.payload;
         },
+        clearFilteredAds: (state) => {
+            state.filteredAds = initialState;
+        },
     },
 });
 
-export const { setFilteredAds } = filterSlice.actions;
+export const { setFilteredAds, clearFilteredAds } = filterSlice.actions;
 export const selectFilterAds = (state) => state.filter.filteredAds;
 
 export const filterReducer = filterSlice.reducer;

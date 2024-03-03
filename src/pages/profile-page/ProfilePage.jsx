@@ -8,10 +8,11 @@ import ProfileContentCards from '../../components/profile-content-cards/ProfileC
 
 function ProfilePage() {
     const { data, isLoading } = useGetCurrentUserQuery();
+
     if (isLoading) {
-        return 'Loading';
+        return 'Идет загрузка...';
     }
-    console.log({ data, isLoading });
+
     return (
         <div>
             <div className={s.mainContainer}>

@@ -5,7 +5,7 @@ import { adsAPI } from '../../services/getAccessTokenService';
 import { selectFilterAds } from '../../redux/slices/filterSlice';
 
 function MainContentCards() {
-    const { data: allAds } = adsAPI.useGetAllAdsQuery();
+    const { data: allAds, isLoading } = adsAPI.useGetAllAdsQuery();
     console.log(allAds);
     const filterAds = useSelector(selectFilterAds);
     const filteredAds = allAds?.filter((ads) => {
@@ -14,6 +14,11 @@ function MainContentCards() {
             .includes(filterAds.toLowerCase());
         return matchesNameTrack;
     });
+
+    if (isLoading) {
+        return 'Идет загрузка...';
+    }
+
     return (
         <div className={s.mainWrapper}>
             <div className={s.mainContent}>
