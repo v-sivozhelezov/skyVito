@@ -14,6 +14,8 @@ function FormModalAdd() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [error, setError] = useState('');
+
     const [addAdvText] = useAddAdvTextMutation();
     const [uploadImageAdv] = useUploadImageAdvMutation();
     const [image, setImage] = useState([]);
@@ -22,6 +24,19 @@ function FormModalAdd() {
     console.log(imagePreLoad);
 
     const submitAdv = () => {
+        if (!title) {
+            setError('Введите название');
+            return;
+        }
+        if (!price) {
+            setError('Введите цену');
+            return;
+        }
+        if (price < 0) {
+            setError('Цена должна быть больше 0');
+            return;
+        }
+
         addAdvText({ title, description, price }).then((res) => {
             if (!image) {
                 return;
@@ -62,7 +77,10 @@ function FormModalAdd() {
                     value={title}
                     id="formName"
                     placeholder="Введите название"
-                    onChange={(event) => setTitle(event.target.value)}
+                    onChange={(event) => {
+                        setTitle(event.target.value);
+                        setError('');
+                    }}
                 />
             </div>
             <div className={s.formNewArtBlock}>
@@ -187,10 +205,14 @@ function FormModalAdd() {
                     className={s.formNewArtInputPrice}
                     type="number"
                     defaultValue={price}
-                    onChange={(event) => setPrice(Number(event.target.value))}
+                    onChange={(event) => {
+                        setPrice(Number(event.target.value));
+                        setError('');
+                    }}
                 />
                 <div className={s.formNewArtInputPriceCover} />
             </div>
+            {error ? <span className={s.error}>{error}</span> : ''}
             <button
                 type="button"
                 className={`${s.formNewArtBtnPub} ${s.btnHov02}`}
