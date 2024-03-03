@@ -10,6 +10,7 @@ import { useAddReviewForAdvMutation } from '../../services/getAccessTokenService
 function ProductReviews(props) {
     const { reviews, handlePopUp, id } = props;
     const [comment, setComment] = useState('');
+    console.log(props);
 
     const [addComment] = useAddReviewForAdvMutation();
 
@@ -53,15 +54,18 @@ function ProductReviews(props) {
                         </button>
                     </form>
                     <div className={s.modalReviews}>
-                        {reviews?.map((review) => {
+                        {reviews?.map((review, index) => {
                             return (
-                                <Reviewer
-                                    key={review.author.id}
-                                    reviewName={review.author.name}
-                                    reviewText={review.text}
-                                    reviewDate={changeDate(review.created_on)}
-                                    reviewTitle="Комментарий"
-                                />
+                                <li className={s.listReviews} key={index}>
+                                    <Reviewer
+                                        reviewAuthor={review.author}
+                                        reviewText={review.text}
+                                        reviewDate={changeDate(
+                                            review.created_on,
+                                        )}
+                                        reviewTitle="Комментарий"
+                                    />
+                                </li>
                             );
                         })}
                     </div>

@@ -9,11 +9,15 @@ function ProfileContentCards(props) {
     return (
         <div className={s.mainWrapper}>
             <div className={s.mainContent}>
-                <div className={s.cards}>
-                    {filteredAds?.map((ad) => {
-                        return <CardItem ad={ad} key={ad.id} />;
+                <ul className={s.cards}>
+                    {filteredAds?.map((ad, index) => {
+                        return (
+                            <li className={s.listContent} key={index}>
+                                <CardItem ad={ad} />;
+                            </li>
+                        );
                     })}
-                </div>
+                </ul>
             </div>
         </div>
     );

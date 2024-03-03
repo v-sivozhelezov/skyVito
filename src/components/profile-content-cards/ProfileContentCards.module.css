@@ -28,3 +28,7 @@
     background-color: #0080c1;
     border-radius: 3px;
 }
+
+.listContent {
+    list-style-type: none;
+}

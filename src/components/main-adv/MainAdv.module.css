@@ -77,6 +77,10 @@
     align-items: center;
 }
 
+.articleImgList {
+    list-style-type: none;
+}
+
 .articleImg {
     width: 480px;
     height: 480px;

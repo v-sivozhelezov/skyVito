@@ -57,28 +57,34 @@ function MainAdv({ getChoseAdv }) {
                                     alt="img"
                                 />
                             </div>
-                            <div className={s.articleImgBar}>
-                                {getChoseAdv?.images?.map((img) => {
+                            <ul className={s.articleImgBar}>
+                                {getChoseAdv?.images?.map((img, index) => {
                                     return (
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setDefaultUrlImg(img.url)
-                                            }
+                                        <li
+                                            className={s.articleImgList}
+                                            key={index}
                                         >
-                                            <div
-                                                key={img.id}
-                                                className={s.articleImgBarDiv}
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setDefaultUrlImg(img.url)
+                                                }
                                             >
-                                                <img
-                                                    src={`http://localhost:8090/${img.url}`}
-                                                    alt="img"
-                                                />
-                                            </div>
-                                        </button>
+                                                <div
+                                                    className={
+                                                        s.articleImgBarDiv
+                                                    }
+                                                >
+                                                    <img
+                                                        src={`http://localhost:8090/${img.url}`}
+                                                        alt="img"
+                                                    />
+                                                </div>
+                                            </button>
+                                        </li>
                                     );
                                 })}
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
