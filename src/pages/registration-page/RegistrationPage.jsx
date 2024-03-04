@@ -3,8 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import s from './RegistrationPage.module.css';
-import { getAccessTokenAPI } from '../../services/getAccessTokenService';
-import { setAuth } from '../../redux/slices/authSlice';
+import {
+    getAccessTokenAPI,
+    useGetAuthUserMutation,
+} from '../../services/getAccessTokenService';
+import { setAuth, setAuthUser } from '../../redux/slices/authSlice';
 
 function RegistrationPage() {
     const [email, setEmail] = useState('');
@@ -19,12 +22,12 @@ function RegistrationPage() {
     const [fetchPostRegister] =
         getAccessTokenAPI.useFetchPostRegisterMutation();
     const [postAccessToken] = getAccessTokenAPI.usePostAccessTokenMutation();
+    const [getAuthUser] = useGetAuthUserMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const responseToken = () => {
         postAccessToken({ email, password })
             .then((response) => {
-                navigate('/');
                 dispatch(
                     setAuth({
                         access: response.data.access_token,
@@ -34,6 +37,18 @@ function RegistrationPage() {
                 );
                 localStorage.setItem('access', response?.data?.access_token);
                 localStorage.setItem('refresh', response?.data?.refresh_token);
+            })
+            .then(() => {
+                getAuthUser().then((response) => {
+                    localStorage.setItem(
+                        'userInfoData',
+                        JSON.stringify(response.data),
+                    );
+                    dispatch(setAuthUser(response.data));
+                    console.log(response);
+                    setError('');
+                    navigate('/');
+                });
             })
             .catch((er) => {
                 console.log(er);

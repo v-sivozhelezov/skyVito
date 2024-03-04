@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import s from '../../modals/add-new-adv/AddNewAdv.module.css';
 import {
+    useDeleteImageAdvMutation,
     useEditAdvMutation,
     useUploadImageAdvMutation,
 } from '../../services/getAccessTokenService';
@@ -16,9 +17,10 @@ function FormModal(props) {
     const [error, setError] = useState('');
     const [editAdv] = useEditAdvMutation();
     const [uploadImageAdv] = useUploadImageAdvMutation();
-    const [image, setImage] = useState('');
-    const [imagePreLoad, setImagePreLoad] = useState(adv?.images);
-    console.log(image);
+    const image = adv?.images;
+    const [newImage, setNewImage] = useState([]);
+    const [imagePreLoad, setImagePreLoad] = useState([]);
+    console.log(newImage);
     console.log(imagePreLoad);
 
     const submitAdv = () => {
@@ -37,13 +39,13 @@ function FormModal(props) {
 
         editAdv({ id: adv.id, data: { title, description, price } }).then(
             () => {
-                if (!image) {
+                if (!newImage) {
                     return;
                 }
                 // eslint-disable-next-line no-plusplus
                 for (let i = 0; i < imagePreLoad.length; i++) {
                     const formData = new FormData();
-                    formData.append('file', image);
+                    formData.append('file', newImage[i]);
                     uploadImageAdv({ id: adv.id, formData });
                 }
             },
@@ -62,9 +64,11 @@ function FormModal(props) {
     const uploadAdvFoto = (event) => {
         event.preventDefault();
         const selectedFile = event.target.files[0];
-        setImage(() => [...image, selectedFile]);
+        setNewImage(() => [...newImage, selectedFile]);
         changePreLoadImage(selectedFile);
     };
+
+    const [deleteImg] = useDeleteImageAdvMutation();
 
     return (
         <form className={`${s.modalFormNewArt} ${s.formNewArt}`} action="">
@@ -103,6 +107,22 @@ function FormModal(props) {
                 </p>
                 <div className={s.formNewArtBarImg}>
                     <div className={s.formNewArtImg}>
+                        <div
+                            className={(s.modalBtnClose, s.modalBtnCloseDelete)}
+                        >
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    deleteImg({
+                                        id: adv.id,
+                                        url: image[0]?.url,
+                                    });
+                                }}
+                            >
+                                {' '}
+                                <div className={s.modalBtnCloseLine} />
+                            </button>
+                        </div>
                         <input
                             id="changeImg"
                             className={s.settingsChangePhoto}
@@ -111,9 +131,30 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
-                            {imagePreLoad[0].url && (
+                            {image[0].url && (
+                                <div className={s.modalBtnCloseLine}>
+                                    <img
+                                        src={`http://localhost:8090/${image[0]?.url}`}
+                                        alt="img"
+                                        className={s.formNewArtImgCover}
+                                    />
+                                </div>
+                            )}
+                            <div className={s.formNewArtImgCover} />
+                        </label>
+                    </div>
+                    <div className={s.formNewArtImg}>
+                        <input
+                            id="changeImg"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={uploadAdvFoto}
+                        />
+                        <label htmlFor="changeImg">
+                            {image[1]?.url && (
                                 <img
-                                    src={`http://localhost:8090/${imagePreLoad[0]?.url}`}
+                                    src={`http://localhost:8090/${image[1]?.url}`}
                                     alt="img"
                                     className={s.formNewArtImgCover}
                                 />
@@ -130,9 +171,9 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
-                            {imagePreLoad[1]?.url && (
+                            {image[2]?.url && (
                                 <img
-                                    src={`http://localhost:8090/${imagePreLoad[1]?.url}`}
+                                    src={`http://localhost:8090/${image[2]?.url}`}
                                     alt="img"
                                     className={s.formNewArtImgCover}
                                 />
@@ -149,9 +190,9 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
-                            {imagePreLoad[2]?.url && (
+                            {imagePreLoad[0] && (
                                 <img
-                                    src={`http://localhost:8090/${imagePreLoad[2]?.url}`}
+                                    src={imagePreLoad[0]}
                                     alt="img"
                                     className={s.formNewArtImgCover}
                                 />
@@ -168,28 +209,9 @@ function FormModal(props) {
                             onChange={uploadAdvFoto}
                         />
                         <label htmlFor="changeImg">
-                            {imagePreLoad[3]?.url && (
+                            {imagePreLoad[1] && (
                                 <img
-                                    src={`http://localhost:8090/${imagePreLoad[3]?.url}`}
-                                    alt="img"
-                                    className={s.formNewArtImgCover}
-                                />
-                            )}
-                            <div className={s.formNewArtImgCover} />
-                        </label>
-                    </div>
-                    <div className={s.formNewArtImg}>
-                        <input
-                            id="changeImg"
-                            className={s.settingsChangePhoto}
-                            type="file"
-                            accept=".jpg, .jpeg, .png"
-                            onChange={uploadAdvFoto}
-                        />
-                        <label htmlFor="changeImg">
-                            {imagePreLoad[4]?.url && (
-                                <img
-                                    src={`http://localhost:8090/${imagePreLoad[4]?.url}`}
+                                    src={imagePreLoad[1]}
                                     alt="img"
                                     className={s.formNewArtImgCover}
                                 />

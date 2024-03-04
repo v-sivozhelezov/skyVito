@@ -21,6 +21,10 @@
     background-color: #0080c1;
 }
 
+.containerDelete {
+    color: #ffffff;
+}
+
 .modalTitle:hover::before {
     border-top: 2px solid #0080c1;
     border-left: 2px solid #0080c1;
@@ -28,6 +32,17 @@
 
 .btnHov02:hover {
     background-color: #0080c1;
+}
+
+.containerImg {
+    position: relative;
+}
+
+.deleteImg {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
 }
 
 .modalBlock {
@@ -387,4 +402,14 @@
 
 .blockPrice {
     position: relative;
+}
+
+.modalBtnCloseDelete {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 5px;
+    right: -20px;
+    z-index: 3;
+    cursor: pointer;
 }

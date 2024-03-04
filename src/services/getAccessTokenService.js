@@ -237,6 +237,16 @@ export const adsAPI = createApi({
             },
             invalidatesTags: ['Ads'],
         }),
+        deleteImageAdv: build.mutation({
+            query: ({ id, url }) => {
+                return {
+                    method: 'DELETE',
+                    url: `/ads/${id}/image`,
+                    body: JSON.stringify({ file_url: url }),
+                };
+            },
+            invalidatesTags: ['Ads'],
+        }),
         editAdv: build.mutation({
             query: ({ id, data }) => ({
                 url: `/ads/${id}`,
@@ -263,4 +273,5 @@ export const {
     useAddReviewForAdvMutation,
     useUploadImageAdvMutation,
     useEditAdvMutation,
+    useDeleteImageAdvMutation,
 } = adsAPI;
