@@ -77,6 +77,10 @@
     align-items: center;
 }
 
+.articleImgList {
+    list-style-type: none;
+}
+
 .articleImg {
     width: 480px;
     height: 480px;
@@ -86,7 +90,7 @@
 
 .articleImg img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
@@ -114,6 +118,7 @@
     justify-content: left;
     overflow: hidden;
     margin-left: -5px;
+    justify-content: center;
 }
 
 .articleImgBarDiv {
@@ -127,7 +132,7 @@
 
 .articleImgBarDiv img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
@@ -176,7 +181,6 @@
     margin-bottom: 20px;
 }
 
-
 .articleAuthor {
     margin-top: 34px;
     margin-bottom: 20px;
@@ -201,7 +205,8 @@
 
 .authorImg img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    border-radius: 50%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;

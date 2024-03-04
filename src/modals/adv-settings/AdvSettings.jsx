@@ -1,4 +1,4 @@
-import FormModal from '../../components/form-modals/FormModal';
+import FormModal from '../../components/form-modals/FormModalEdit';
 import HeadingH3 from '../../components/heading-h3/HeadingH3';
 import s from '../add-new-adv/AddNewAdv.module.css';
 

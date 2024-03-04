@@ -12,9 +12,17 @@
     background-color: #f4f5f6;
 }
 
+.error {
+    color: red;
+}
+
 .modalBtnCloseLine:hover::after,
 .modalBtnCloseLine:hover::before {
     background-color: #0080c1;
+}
+
+.containerDelete {
+    color: #ffffff;
 }
 
 .modalTitle:hover::before {
@@ -24,6 +32,17 @@
 
 .btnHov02:hover {
     background-color: #0080c1;
+}
+
+.containerImg {
+    position: relative;
+}
+
+.deleteImg {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
 }
 
 .modalBlock {
@@ -51,6 +70,10 @@
     background-color: #ffffff;
     border-radius: 12px;
     position: relative;
+}
+
+.settingsChangePhoto {
+    display: none;
 }
 
 .modalTitle {
@@ -261,6 +284,7 @@
     left: 0;
     background-color: #f0f0f0;
     z-index: -1;
+    cursor: pointer;
 }
 
 .formNewArtImgCover::after,
@@ -291,7 +315,7 @@
 .formNewArtImg img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
     z-index: 2;
@@ -378,4 +402,14 @@
 
 .blockPrice {
     position: relative;
+}
+
+.modalBtnCloseDelete {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 5px;
+    right: -20px;
+    z-index: 3;
+    cursor: pointer;
 }

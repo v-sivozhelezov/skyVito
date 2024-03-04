@@ -4,11 +4,19 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeadingH3 from '../heading-h3/HeadingH3';
 import s from './MainProfile.module.css';
-import { useEditUserMutation } from '../../services/getAccessTokenService';
+import {
+    useEditUserMutation,
+    useEditUserImgMutation,
+} from '../../services/getAccessTokenService';
+import EditPasswordForm from '../EditPasswordForm/EditPasswordForm';
 
 function MainProfile({ userData }) {
-    const { surname, name, city, phone, role, email } = userData;
+    const { surname, name, city, phone, role, email, avatar } = userData;
     const [editProfile] = useEditUserMutation();
+    const [editProfileImg] = useEditUserImgMutation();
+
+    const formData = new FormData();
+
     const [profile, setProfile] = useState({
         name: '',
         surname: '',
@@ -21,27 +29,69 @@ function MainProfile({ userData }) {
         setProfile({ name, surname, city, phone, role, email });
     }, [userData]);
 
+    const [image, setImage] = useState('');
+    const [imagePreLoad, setImagePreLoad] = useState('');
+    formData.append('file', image);
+
     const changeProfile = (e) => {
         setProfile({ ...profile, [e.target.name]: e.target.value });
     };
 
     const submitProfile = () => {
         editProfile(profile);
+
+        if (image) {
+            console.log(formData);
+            editProfileImg(formData);
+        }
     };
+
+    const changePreLoadImage = (selectedImage) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedImage);
+        reader.onloadend = () => {
+            setImagePreLoad(reader.result);
+        };
+    };
+
+    const UploadUserAvatar = (event) => {
+        event.preventDefault();
+        const selectedFile = event.target.files[0];
+        setImage(selectedFile);
+        changePreLoadImage(selectedFile);
+    };
+
+    const [isPopUpChangePassword, SetIsPopUpChangePassword] = useState(false);
+
     return (
         <div className={s.mainProfile}>
+            {isPopUpChangePassword && (
+                <EditPasswordForm handlePopUp={SetIsPopUpChangePassword} />
+            )}
             <div className={s.profileContent}>
                 <HeadingH3>Настройки профиля</HeadingH3>
                 <div className={s.profileSettings}>
                     <div className={s.settingsLeft}>
                         <div className={s.settingsImg}>
-                            <Link to="/">
-                                <img src="" alt="" />
+                            <Link to="/profile">
+                                {imagePreLoad ? (
+                                    <img src={imagePreLoad} alt="avatar" />
+                                ) : (
+                                    <img
+                                        src={`http://localhost:8090/${avatar ?? ''}`}
+                                        alt="avatar"
+                                    />
+                                )}
                             </Link>
                         </div>
-                        <button className={s.settingsChangePhoto} type="button">
-                            Заменить
-                        </button>
+                        <input
+                            id="change"
+                            className={s.settingsChangePhoto}
+                            type="file"
+                            accept=".jpg, .jpeg, .png"
+                            onChange={UploadUserAvatar}
+                        />
+                        <label htmlFor="change">Заменить</label>
                     </div>
                     <div className={s.settingsRight}>
                         <form className={s.settingsForm} action="#">
@@ -93,6 +143,13 @@ function MainProfile({ userData }) {
                                 onClick={submitProfile}
                             >
                                 Сохранить
+                            </button>
+                            <button
+                                className={s.settingsBtn}
+                                type="button"
+                                onClick={() => SetIsPopUpChangePassword(true)}
+                            >
+                                Сменить пароль
                             </button>
                         </form>
                     </div>

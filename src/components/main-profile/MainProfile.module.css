@@ -2,6 +2,9 @@
     width: 100%;
     padding: 0 0 70px;
 }
+input span {
+    color: red;
+}
 .profileContent {
     max-width: 834px;
 }
@@ -37,20 +40,19 @@
 }
 .settingsImg img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    border-radius: 50%;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
 }
 .settingsChangePhoto {
-    margin-top: 10px;
-    margin-bottom: 30px;
-    text-decoration: none;
-    font-size: 16px;
-    line-height: 24px;
-    border: none;
-    background: none;
+    display: none;
+}
+.settingsChangePhoto + label {
     color: #009ee4;
+    cursor: pointer;
+    margin-top: 20px;
 }
 .settingsRight {
     width: 630px;
@@ -58,9 +60,15 @@
 
 .settingsDiv {
     display: inline-block;
+    position: relative;
     margin: 0 7px 20px;
 }
-
+.settingsDiv span {
+    position: absolute;
+    color: red;
+    bottom: -20px;
+    left: 0;
+}
 .settingsForm {
     width: 630px;
     display: -webkit-box;
@@ -74,7 +82,8 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding: 13px 19px;
-}.settingsForm input:active {
+}
+.settingsForm input:active {
     border: 1px solid rgba(67, 199, 255, 0.2);
 }
 
@@ -141,6 +150,9 @@
     background-color: #009ee4;
     border-radius: 6px;
     border: 1px solid #009ee4;
+}
+.settingsBtn a {
+    color: #ffffff;
 }
 .settingsBtn:hover {
     background-color: #0080c1;

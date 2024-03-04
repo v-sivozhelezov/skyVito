@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setAuth } from '../redux/slices/authSlice';
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
+    console.log(args);
     const baseQuery = fetchBaseQuery({
         baseUrl: 'http://localhost:8090/',
 
@@ -18,14 +19,22 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     const result = await baseQuery(args, api, extraOptions);
     console.debug('Результат первого запроса', { result });
 
-    if (result?.error?.status !== 401) {
+    if (args.url === '/auth/register') {
+        return result;
+    }
+
+    if (
+        result?.error?.status !== 401 ||
+        result?.error?.data?.detail === 'Incorrect password'
+    ) {
         return result;
     }
 
     const forceLogout = () => {
         console.debug('Принудительная авторизация!');
-        api.dispatch(setAuth(null));
-        window.location.assign('/auth');
+        // api.dispatch(setAuth(null));
+        // localStorage.setItem('access_token', null);
+        window.location.assign('/profile');
     };
 
     const { auth } = api.getState();
@@ -36,10 +45,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     const refreshResult = await baseQuery(
         {
-            url: '/auth/login',
+            url: '/auth/login/',
             method: 'PUT',
             body: {
-                refresh: auth.refresh,
+                access_token: auth.access,
+                refresh_token: auth.refresh,
             },
         },
         api,
@@ -48,11 +58,17 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     console.debug('Результат запроса на обновление токена', { refreshResult });
 
-    if (!refreshResult?.data?.access) {
+    if (!refreshResult.data?.access_token) {
         return forceLogout();
     }
 
-    api.dispatch(setAuth({ ...auth, access: refreshResult.data.access }));
+    api.dispatch(
+        setAuth({
+            ...auth,
+            access: refreshResult.data?.access_token,
+            refresh: refreshResult.data?.refresh_token,
+        }),
+    );
 
     const retryResult = await baseQuery(args, api, extraOptions);
 
@@ -82,6 +98,23 @@ export const getAccessTokenAPI = createApi({
                 },
             }),
         }),
+        fetchPostRegister: build.mutation({
+            query: ({ email, password, city, firstName, lastName, phone }) => ({
+                method: 'POST',
+                url: '/auth/register',
+                body: JSON.stringify({
+                    email,
+                    password,
+                    city,
+                    name: firstName,
+                    surname: lastName,
+                    phone,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                },
+            }),
+        }),
         postRefreshAccessToken: build.mutation({
             query: () => ({
                 url: '/auth/login',
@@ -102,7 +135,14 @@ export const userAPI = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['User'],
     endpoints: (build) => ({
-        getAuthUser: build.query({
+        getCurrentUser: build.query({
+            query: () => ({
+                url: '/user',
+            }),
+            providesTags: ['User'],
+        }),
+
+        getAuthUser: build.mutation({
             query: () => ({
                 url: '/user',
             }),
@@ -112,6 +152,21 @@ export const userAPI = createApi({
             query: (body) => ({
                 method: 'PATCH',
                 url: '/user',
+                body,
+            }),
+            invalidatesTags: ['User'],
+        }),
+        editPasswordUser: build.mutation({
+            query: (body) => ({
+                method: 'PUT',
+                url: '/user/password',
+                body,
+            }),
+        }),
+        editUserImg: build.mutation({
+            query: (body) => ({
+                method: 'POST',
+                url: '/user/avatar',
                 body,
             }),
             invalidatesTags: ['User'],
@@ -142,7 +197,81 @@ export const adsAPI = createApi({
             }),
             providesTags: ['Ads'],
         }),
+        addReviewForAdv: build.mutation({
+            query: ({ id, comment }) => ({
+                url: `/ads/${id}/comments`,
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: { text: comment },
+            }),
+            invalidatesTags: ['Ads'],
+        }),
+
+        addAdvText: build.mutation({
+            query: (body) => ({
+                url: `/adstext`,
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body,
+            }),
+            invalidatesTags: ['Ads'],
+        }),
+        deleteAdv: build.mutation({
+            query: (id) => ({
+                url: `/ads/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Ads'],
+        }),
+        uploadImageAdv: build.mutation({
+            query: ({ id, formData }) => {
+                return {
+                    method: 'POST',
+                    url: `/ads/${id}/image`,
+                    body: formData,
+                };
+            },
+            invalidatesTags: ['Ads'],
+        }),
+        deleteImageAdv: build.mutation({
+            query: ({ id, url }) => {
+                return {
+                    method: 'DELETE',
+                    url: `/ads/${id}/image`,
+                    body: JSON.stringify({ file_url: url }),
+                };
+            },
+            invalidatesTags: ['Ads'],
+        }),
+        editAdv: build.mutation({
+            query: ({ id, data }) => ({
+                url: `/ads/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['Ads'],
+        }),
     }),
 });
 
-export const { useGetAuthUserQuery, useEditUserMutation } = userAPI;
+export const {
+    useGetCurrentUserQuery,
+    useGetAuthUserMutation,
+    useEditUserMutation,
+    useEditPasswordUserMutation,
+    useEditUserImgMutation,
+} = userAPI;
+
+export const {
+    useAddAdvTextMutation,
+    useDeleteAdvMutation,
+    useGetReviewsForAdvQuery,
+    useAddReviewForAdvMutation,
+    useUploadImageAdvMutation,
+    useEditAdvMutation,
+    useDeleteImageAdvMutation,
+} = adsAPI;
